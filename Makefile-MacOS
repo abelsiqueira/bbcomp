@@ -1,0 +1,17 @@
+
+MODE = -O3 -DNDEBUG
+#MODE = -g -DDEBUG
+
+FLAGS = -std=c99 -I../library/ ${MODE} -Wall
+
+
+client: client.c libbbcomp.dylib
+	${CC} ${FLAGS} client.c libbbcomp.dylib -o client
+
+libbbcomp.dylib:
+	cp ../library/libbbcomp.dylib .
+
+clean:
+	rm -f client libbbcomp.dylib
+	rm -rf *dSYM
+	rm -f logs/*

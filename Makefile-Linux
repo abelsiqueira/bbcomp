@@ -1,0 +1,25 @@
+
+#MODE = -O3 -DNDEBUG
+MODE = -g -DDEBUG
+
+FLAGS = -std=gnu99 -I../library/ ${MODE} -Wall -fPIC
+
+
+client: client.c libbase.so libbbcomp.so
+	${CC} ${FLAGS} client.c libbase.so libbbcomp.so -ldl -o client -lm
+
+run: client
+	LD_LIBRARY_PATH=. ./client
+
+libbase.so: base.o
+	ld -shared -o libbase.so base.o
+
+base.o: base.c
+	$(CC) $(FLAGS) -c -o base.o -ldl base.c
+
+libbbcomp.so:
+	cp ../library/libbbcomp.so .
+
+clean:
+	rm -f client libbbcomp.so libbase.so
+	rm -f logs/*
