@@ -35,14 +35,3 @@ end
 function safeGetEvaluations (problemID::Cint)
   return ccall((:safeGetEvaluations, "libbase.so"), Cint, (Cint,), problemID)
 end
-
-function solveProblem(pID)
-  pID = Cint(pID)
-  safeSetProblem(pID)
-
-  bud = safeGetBudget(pID)
-  dim = safeGetDimension(pID)
-  evals = safeGetEvaluations(pID)
-
-  println("Dim = $dim")
-end

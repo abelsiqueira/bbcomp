@@ -9,7 +9,8 @@ client: client.c libbase.so libbbcomp.so
 	${CC} ${FLAGS} client.c libbase.so libbbcomp.so -ldl -o client -lm
 
 run: client
-	LD_LIBRARY_PATH=. ./client
+	#LD_LIBRARY_PATH=. ./client
+	LD_LIBRARY_PATH=. julia main.jl
 
 libbase.so: base.o
 	ld -shared -o libbase.so base.o

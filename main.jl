@@ -1,11 +1,24 @@
-include("src/code.jl")
+trial = true
 
-ccall( (:dll_load, "libbase.so"), Void, ())
+if trial
+  include("src/trial.jl")
+else
+  include("src/code.jl")
+end
+include("src/method.jl")
+
+if !trial
+  ccall( (:dll_load, "libbase.so"), Void, ())
+end
 
 safeLogin()
 safeSetTrack()
 n = safeGetNumberOfProblems()
 
-solveProblem(0)
+for i = 0:n-1
+  solveProblem(i)
+end
 
-ccall( (:dll_close, "libbase.so"), Void, ())
+if !trial
+  ccall( (:dll_close, "libbase.so"), Void, ())
+end
